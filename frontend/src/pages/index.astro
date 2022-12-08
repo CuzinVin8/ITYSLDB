@@ -1,11 +1,26 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import {getAllQuotes} from "../sanity/api.js";
+import { urlForImage } from '../sanity/urlForImage.js';
+
+const quotes = await getAllQuotes();
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
+		<h1>I Think You Should Leave Quote DB</h1>
+		<ul>
+			{quotes.map((quote: { character: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
+				<li>
+					"{quote.quote}"<br />
+					<img src={urlForImage(quote.characterimage).width(300).url()} /><br />
+					{quote.character}
+					<i>{quote.sketch}</i>, Season: {quote.season}, Ep: {quote.episode}<br />
+				</li>
+			)}
+		</ul>
+		
 		<p class="instructions">
 			To get started, open the directory <code>src/pages</code> in your project.<br />
 			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
@@ -43,7 +58,9 @@ import Card from '../components/Card.astro';
 	}
 	h1 {
 		font-size: 3rem;
-		font-weight: 800;
+		font-family: cooper-black-std,serif;
+		font-weight: 400;
+		font-style: italic;
 		margin: 0;
 	}
 	.text-gradient {
