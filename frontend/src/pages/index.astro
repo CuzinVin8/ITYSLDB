@@ -1,98 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import {getAllQuotes} from "../sanity/api.js";
-import { urlForImage } from '../sanity/urlForImage.js';
+import {getAllQuotes,getSketches,getSearchResults} from "../sanity/api.js";
+import {urlForImage} from '../sanity/urlForImage.js';
 
 const quotes = await getAllQuotes();
+//const quotes = await getSearchResults('tuna');
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="I Think You Should Leave Quote Database">
 	<main>
-		<h1>I Think You Should Leave Quote DB</h1>
-		<ul>
-			{quotes.map((quote: { character: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
-				<li>
-					"{quote.quote}"<br />
-					<img src={urlForImage(quote.characterimage).width(300).url()} /><br />
-					{quote.character}
-					<i>{quote.sketch}</i>, Season: {quote.season}, Ep: {quote.episode}<br />
-				</li>
+		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
+		<h2 class="font-serif text-center text-lg">ITYSL Quote Database</h2>
+		<ul class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
+			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
+				<Card
+					quote={quote.quote}
+					imgurl={urlForImage(quote.characterimage).width(600).url()}
+					sketch={quote.sketch}
+					season={quote.season}
+					episode={quote.episode}
+					character={quote.charactername}
+				/>
 			)}
-		</ul>
-		
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
 		</ul>
 	</main>
 </Layout>
-
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-family: cooper-black-std,serif;
-		font-weight: 400;
-		font-style: italic;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
-</style>
