@@ -1,28 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Search from '../components/Search.js';
 import {getAllQuotes,getSketches,getSearchResults} from "../sanity/api.js";
 import {urlForImage} from '../sanity/urlForImage.js';
 
-const quotes = await getAllQuotes();
+//const quotes = await getAllQuotes();
 //const quotes = await getSearchResults('tuna');
 ---
 
 <Layout title="I Think You Should Leave Quote Database">
 	<main>
+		<section class="px-5">
 		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
-		<h2 class="font-serif text-center text-lg">ITYSL Quote Database</h2>
-		<ul class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
-			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
-				<Card
-					quote={quote.quote}
-					imgurl={urlForImage(quote.characterimage).width(600).url()}
-					sketch={quote.sketch}
-					season={quote.season}
-					episode={quote.episode}
-					character={quote.charactername}
-				/>
-			)}
-		</ul>
+		<h2 class="font-serif text-center text-lg pb-5">ITYSL Quote Database</h2>
+		<div class="container mx-auto w-full max-w-3xl"><input class="p-4 rounded-lg w-full mw-md text-black" /></div>
+		</section>
+		<Search client:only />
 	</main>
 </Layout>
