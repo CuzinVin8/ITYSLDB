@@ -62,7 +62,12 @@ const quotes = await getAllQuotes();
 					results.result.forEach(obj => {
 						cutLink = obj.characterimage.asset._ref.slice(6).slice(0, -4);
 						imgLink = "https://cdn.sanity.io/images/7lpknm4h/production/" + cutLink + ".jpg?w=600";
-						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+obj.charactername+'</div></div></li>';
+						if(obj.charactername === undefined){
+							charname = '';
+						} else {
+							charname = " - " + obj.charactername;
+						}
+						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+charname+'</div></div></li>';
 					})
 				})
             }, 400);
