@@ -53,8 +53,8 @@ const quotes = await getAllQuotes();
             timeout = setTimeout(function() {
 				let newQ = `*[quote%20match%20"*${st.value}*"]`;
 				fetchQuotesJSON(newQ).then(function(results) {
-					console.log(results);
-					if(results.result == []){
+					console.log(results.result.length);
+					if(results.result.length === 0){
 						document.getElementById('resultDiv').innerHTML = '<i>No Results Found.</i>';
 					} else{
 						document.getElementById('resultDiv').innerHTML = '';
