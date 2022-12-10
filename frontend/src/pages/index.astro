@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import {getAllQuotes,getSketches,getSearchResults} from "../sanity/api.js";
+import {getAllQuotes} from "../sanity/api.js";
 import {urlForImage} from '../sanity/urlForImage.js';
 
 const quotes = await getAllQuotes();
@@ -11,7 +11,8 @@ const quotes = await getAllQuotes();
 <Layout title="I Think You Should Leave Quote Database">
 	<main>
 		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
-		<h2 class="font-serif text-center text-lg">ITYSL Quote Database</h2>
+		<h2 class="font-serif text-center text-lg pb-5">ITYSL Quote Database</h2>
+		<div class="container mx-auto w-full max-w-3xl"><input placeholder="Search for quotes..." class="p-4 rounded-lg w-full mw-md text-black" /></div>
 		<ul class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
 				<Card
@@ -26,3 +27,23 @@ const quotes = await getAllQuotes();
 		</ul>
 	</main>
 </Layout>
+
+<script>
+	// create a variable to store the timeout
+    let timeout: number | undefined = undefined;
+
+    // add an event listener to the textbox to detect when the user stops typing
+    let st = (document.getElementById('searchTextbox') as HTMLInputElement);
+    if(st !== null){
+        st.addEventListener('keyup', function() {
+        // clear the timeout if it is already set
+            clearTimeout(timeout);
+
+            // set the timeout to call the searchJson() function after 300 milliseconds
+            timeout = setTimeout(function() {
+				//console.log(st.value);
+				console.log('tet');
+            }, 300);
+        });
+    }
+</script>
