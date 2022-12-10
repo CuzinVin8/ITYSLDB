@@ -13,7 +13,7 @@ const quotes = await getAllQuotes();
 		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
 		<h2 class="font-serif text-center text-lg pb-5">ITYSL Quote Database</h2>
 		<div class="container mx-auto w-full max-w-3xl"><input id="searchTextbox" placeholder="Search for quotes..." class="p-4 rounded-lg w-full mw-md text-black" /></div>
-		<ul class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
+		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
 				<Card
 					quote={quote.quote}
@@ -35,7 +35,6 @@ const quotes = await getAllQuotes();
 	//api call for text search
 	async function fetchQuotesJSON(sq) {
 		const nsearch = "https://7lpknm4h.apicdn.sanity.io/v2021-06-07/data/query/production?query="+sq;
-		console.log(nsearch);
 		const response = await fetch(nsearch);
 		const quotes = await response.json();
 		return quotes;
@@ -45,20 +44,28 @@ const quotes = await getAllQuotes();
     let st = document.getElementById('searchTextbox');
     if(st !== null){
         st.addEventListener('keyup', function() {
-        // clear the timeout if it is already set
+        	// clear the timeout if it is already set
             clearTimeout(timeout);
+			//clear the results
+			document.getElementById('resultDiv').innerHTML = '<i>Searching...</i>';
 
             // set the timeout to call the searchJson() function after 300 milliseconds
             timeout = setTimeout(function() {
 				let newQ = `*[quote%20match%20"*${st.value}*"]`;
 				fetchQuotesJSON(newQ).then(function(results) {
-				results.result.forEach(obj => {
-						Object.entries(obj).forEach(([key, value]) => {
-							console.log(`${key} ${value}`);
-						});
+					console.log(results);
+					if(results.result == []){
+						document.getElementById('resultDiv').innerHTML = '<i>No Results Found.</i>';
+					} else{
+						document.getElementById('resultDiv').innerHTML = '';
+					}
+					results.result.forEach(obj => {
+						cutLink = obj.characterimage.asset._ref.slice(6).slice(0, -4);
+						imgLink = "https://cdn.sanity.io/images/7lpknm4h/production/" + cutLink + ".jpg?w=600";
+						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+obj.charactername+'</div></div></li>';
 					})
 				})
-            }, 300);
+            }, 400);
         });
     }
 </script>
