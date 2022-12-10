@@ -1,31 +1,19 @@
 {
-  "name": "frontend",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@example/basics",
   "type": "module",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@astrojs/react": "^1.2.2",
     "@astrojs/tailwind": "^2.1.3",
     "astro": "^1.6.13",
     "astro-sanity": "^1.0.0",
     "tailwindcss": "^3.2.4"
-=======
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
-    "@vitejs/plugin-react": "^3.0.0",
-    "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.3",
-    "vite": "^4.0.0"
->>>>>>> 107bce8cc8ee1d3a3b31dc09c504d754a710a665
   }
 }

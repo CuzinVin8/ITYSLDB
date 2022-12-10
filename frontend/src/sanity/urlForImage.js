@@ -1,9 +1,7 @@
-import React from 'react'
-import myConfiguredSanityClient from './sanityClient'
-import imageUrlBuilder from '@sanity/image-url'
+import { useSanityClient, createImageBuilder} from 'astro-sanity';
 
-export const builder = imageUrlBuilder(myConfiguredSanityClient)
+export const imageBuilder = createImageBuilder(useSanityClient());
 
 export function urlForImage(source) {
-    return builder.image(source)
+    return imageBuilder.image(source);
 }

@@ -21,40 +21,4 @@ const { title } = Astro.props;
 		<slot />
 		<div class="float-left pl-5 pt-5"><script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="cuzinvin8" data-color="#5F7FFF" data-emoji="👉🏼"  data-font="Lato" data-text="You gotta give!" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script></div>
 	</body>
-
-	<script>
-	//api call
-	async function getResponse(search: string, sketch: string) {
-		let qq = `*[quote match '*${search}*']`;
-		const uri = 'https://7lpknm4h.apicdn.sanity.io/v2021-03-25//data/query/production?query='+qq;
-		const encoded = encodeURI(uri);
-		const response = await fetch(
-			encoded,
-			{
-				method: 'GET'
-			}
-		);
-		const data = await response.json(); // Extracting data as a JSON Object from the response
-		return data;
-	}
-	
-	// create a variable to store the timeout
-	let timeout: number | undefined = undefined;
-	
-	// add an event listener to the textbox to detect when the user stops typing
-	let st = (document.getElementById('searchTextbox') as HTMLInputElement);
-	console.log(st);
-	if(st !== null){
-		st.addEventListener('keyup', function() {
-		// clear the timeout if it is already set
-			clearTimeout(timeout);
-	
-			// set the timeout to call the searchJson() function after 300 milliseconds
-			timeout = setTimeout(function() {
-				console.log(st.value);
-				console.log(getResponse(st.value, ''));
-			}, 300);
-		});
-	}
-	</script>
 </html>
