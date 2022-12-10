@@ -50,12 +50,14 @@ const quotes = await getAllQuotes();
 
             // set the timeout to call the searchJson() function after 300 milliseconds
             timeout = setTimeout(function() {
-				//console.log(st.value);
 				let newQ = `*[quote%20match%20"*${st.value}*"]`;
-				console.log(newQ);
-				fetchQuotesJSON(newQ).then(quotes => {
-					quotes; 
-				});
+				fetchQuotesJSON(newQ).then(function(results) {
+				results.result.forEach(obj => {
+						Object.entries(obj).forEach(([key, value]) => {
+							console.log(`${key} ${value}`);
+						});
+					})
+				})
             }, 300);
         });
     }
