@@ -34,8 +34,7 @@ const quotes = await getAllQuotes();
 
 	//api call for text search
 	async function fetchQuotesJSON(sq) {
-		const unenuri = "https://7lpknm4h.apicdn.sanity.io/v2021-06-07/data/query/production?query="+sq;
-		const nsearch = encodeURI(unenuri);
+		const nsearch = "https://7lpknm4h.apicdn.sanity.io/v2021-06-07/data/query/production?query="+sq;
 		console.log(nsearch);
 		const response = await fetch(nsearch);
 		const quotes = await response.json();
@@ -52,7 +51,7 @@ const quotes = await getAllQuotes();
             // set the timeout to call the searchJson() function after 300 milliseconds
             timeout = setTimeout(function() {
 				//console.log(st.value);
-				let newQ = `*[quote match "*${quote}*"]`;
+				let newQ = `*[quote%20match%20"*${st.value}*"]`;
 				console.log(newQ);
 				fetchQuotesJSON(newQ).then(quotes => {
 					quotes; 
