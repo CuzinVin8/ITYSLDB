@@ -12,7 +12,7 @@ const quotes = await getAllQuotes();
 	<main>
 		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
 		<h2 class="font-serif text-center text-lg pb-5">ITYSL Quote Database</h2>
-		<div class="container mx-auto w-full max-w-3xl"><input placeholder="Search for quotes..." class="p-4 rounded-lg w-full mw-md text-black" /></div>
+		<div class="container mx-auto w-full max-w-3xl"><input id="searchTextbox" placeholder="Search for quotes..." class="p-4 rounded-lg w-full mw-md text-black" /></div>
 		<ul class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
 				<Card
@@ -28,12 +28,22 @@ const quotes = await getAllQuotes();
 	</main>
 </Layout>
 
-<script>
+<script is:inline>
 	// create a variable to store the timeout
-    let timeout: number | undefined = undefined;
+    let timeout = undefined;
+
+	//api call for text search
+	async function fetchQuotesJSON(sq) {
+		const unenuri = "https://7lpknm4h.apicdn.sanity.io/v2021-06-07/data/query/production?query="+sq;
+		const nsearch = encodeURI(unenuri);
+		console.log(nsearch);
+		const response = await fetch(nsearch);
+		const quotes = await response.json();
+		return quotes;
+	}
 
     // add an event listener to the textbox to detect when the user stops typing
-    let st = (document.getElementById('searchTextbox') as HTMLInputElement);
+    let st = document.getElementById('searchTextbox');
     if(st !== null){
         st.addEventListener('keyup', function() {
         // clear the timeout if it is already set
@@ -42,7 +52,11 @@ const quotes = await getAllQuotes();
             // set the timeout to call the searchJson() function after 300 milliseconds
             timeout = setTimeout(function() {
 				//console.log(st.value);
-				console.log('tet');
+				let newQ = `*[quote match "*${quote}*"]`;
+				console.log(newQ);
+				fetchQuotesJSON(newQ).then(quotes => {
+					quotes; 
+				});
             }, 300);
         });
     }
