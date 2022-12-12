@@ -11,7 +11,7 @@ export async function getAllQuotes() {
 export async function getSketchList() {
     const client = useSanityClient()
     let sketchList = []
-    const query = '*[_type == "quote"] | order(sketch asc)'
+    const query = '*[_type == "quote"]{sketch} | order(sketch asc)'
     const quotes = await client.fetch(query)
 
     //push sketches to an array
