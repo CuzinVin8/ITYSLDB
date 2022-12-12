@@ -60,33 +60,36 @@ const sketches = await getSketchList();
     let st = document.getElementById('searchTextbox');
     if(st !== null){
         st.addEventListener('keyup', function() {
-        	// clear the timeout if it is already set
-            clearTimeout(timeout);
-			//clear the results
-			document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">Searching...</i>';
+			let leng = st.value;
+			if(leng.length > 3){
+				// clear the timeout if it is already set
+				clearTimeout(timeout);
+				//clear the results
+				document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">Searching...</i>';
 
-            // set the timeout to call the searchJson() function after 300 milliseconds
-            timeout = setTimeout(function() {
-				let newQ = `*[quote%20match%20"*${st.value}*"]%20|%20order(season%20asc,%20episode%20asc,%20timestamp%20asc)`;
-				fetchQuotesJSON(newQ).then(function(results) {
-					if(results.result.length === 0){
-						document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">No Results Found.<br /><img class="pt-2 pb-5 mx-auto px-5" src="/noresults.jpg" width="480" /></i>';
-					} else{
-						document.getElementById('resultDiv').innerHTML = '';
-					}
-					results.result.forEach(obj => {
-						cutLink = obj.characterimage.asset._ref.slice(6).slice(0, -4);
-						imgLink = "https://cdn.sanity.io/images/7lpknm4h/production/" + cutLink + ".jpg?w=600";
-						if(obj.charactername === undefined){
-							charname = '';
-						} else {
-							charname = " - " + obj.charactername;
+				// set the timeout to call the searchJson() function after 300 milliseconds
+				timeout = setTimeout(function() {
+					let newQ = `*[quote%20match%20"*${st.value}*"]%20|%20order(season%20asc,%20episode%20asc,%20timestamp%20asc)`;
+					fetchQuotesJSON(newQ).then(function(results) {
+						if(results.result.length === 0){
+							document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">No Results Found.<br /><img class="pt-2 pb-5 mx-auto px-5" src="/noresults.jpg" width="480" /></i>';
+						} else{
+							document.getElementById('resultDiv').innerHTML = '';
 						}
-						let alt = obj.quote.substring(0, 100);
-						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+charname+'</div></div></li>';
+						results.result.forEach(obj => {
+							cutLink = obj.characterimage.asset._ref.slice(6).slice(0, -4);
+							imgLink = "https://cdn.sanity.io/images/7lpknm4h/production/" + cutLink + ".jpg?w=600";
+							if(obj.charactername === undefined){
+								charname = '';
+							} else {
+								charname = " - " + obj.charactername;
+							}
+							let alt = obj.quote.substring(0, 100);
+							document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+charname+'</div></div></li>';
+						})
 					})
-				})
-            }, 1000);
+				}, 1000);
+			}
         });
     }
 
