@@ -82,7 +82,8 @@ const sketches = await getSketchList();
 						} else {
 							charname = " - " + obj.charactername;
 						}
-						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+charname+'</div></div></li>';
+						let alt = obj.quote.substring(0, 100);
+						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+charname+'</div></div></li>';
 					})
 				})
             }, 1000);
@@ -117,7 +118,8 @@ const sketches = await getSketchList();
 						} else {
 							charname = " - " + obj.charactername;
 						}
-						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+charname+'</div></div></li>';
+						let alt = obj.quote.substring(0, 100);
+						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><div class="text-xl">"'+obj.quote+'"</div><div class="text-right pt-2">'+charname+'</div></div></li>';
 					})
 				})
 	}
