@@ -67,7 +67,7 @@ const sketches = await getSketchList();
 
             // set the timeout to call the searchJson() function after 300 milliseconds
             timeout = setTimeout(function() {
-				let newQ = `*[quote%20match%20"*${st.value}*"]%20|%20order(season%20asc,%20episode%20asc,%20sketch%20asc)`;
+				let newQ = `*[quote%20match%20"*${st.value}*"]%20|%20order(season%20asc,%20episode%20asc,%20timestamp%20asc)`;
 				fetchQuotesJSON(newQ).then(function(results) {
 					if(results.result.length === 0){
 						document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">No Results Found.<br /><img class="pt-2 pb-5 mx-auto px-5" src="/noresults.jpg" width="480" /></i>';
@@ -102,7 +102,7 @@ const sketches = await getSketchList();
 
 	function searchBySketch() {
 		var ddv = document.getElementById("sketches");
-		let newQ = `*[sketch%20==%20"${ddv.value}"]`;
+		let newQ = `*[sketch%20==%20"${ddv.value}"]%20|%20order(timestamp%20asc)`;
 				fetchSketchQuotesJSON(newQ).then(function(results) {
 					if(results.result.length === 0){
 						document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">No Results Found.<br /><img class="pt-2 pb-5 mx-auto px-5" src="/noresults.jpg" width="480" /></i>';
