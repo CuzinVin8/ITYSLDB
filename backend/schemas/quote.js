@@ -24,6 +24,11 @@ fields: [
     title: 'Episode'
     },
     {
+    name: 'timestamp',
+    type: 'string',
+    title: 'Timestamp'
+    },
+    {
     name: 'sketch',
     type: 'string',
     title: 'Sketch'
