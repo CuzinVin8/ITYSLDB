@@ -1,0 +1,10 @@
+---
+export interface Props {
+	sketch: string;
+}
+
+const { sketch } = Astro.props;
+//const sketchSlug = sketch.split(" ").join("").toLowerCase();
+---
+
+<option value={sketch}>{sketch}</option>

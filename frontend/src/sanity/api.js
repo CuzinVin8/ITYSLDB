@@ -6,3 +6,20 @@ export async function getAllQuotes() {
     const quotes = await client.fetch(query)
     return quotes;
 }
+
+
+export async function getSketchList() {
+    const client = useSanityClient()
+    let sketchList = []
+    const query = '*[_type == "quote"] | order(sketch asc)'
+    const quotes = await client.fetch(query)
+
+    //push sketches to an array
+    Object.keys(quotes).forEach(e => {
+        sketchList.push(quotes[e].sketch)
+    })
+    //remove duplicates in the array
+    let uniqueSketches = [...new Set(sketchList)];
+    
+    return uniqueSketches;
+}

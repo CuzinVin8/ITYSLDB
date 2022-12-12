@@ -1,18 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import {getAllQuotes} from "../sanity/api.js";
+import SketchSelect from '../components/SketchSelect.astro';
+import {getAllQuotes,getSketchList} from "../sanity/api.js";
 import {urlForImage} from '../sanity/urlForImage.js';
 
 const quotes = await getAllQuotes();
-//const quotes = await getSearchResults('tuna');
+const sketches = await getSketchList();
 ---
 
 <Layout title="I Think You Should Leave Quote Database">
 	<main>
 		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
 		<h2 class="font-serif text-center text-lg pb-5">ITYSL Quote Database</h2>
-		<div class="container mx-auto w-full max-w-3xl px-5"><input id="searchTextbox" placeholder="Search for quotes..." class="p-4 rounded-lg w-full mw-md text-black" /></div>
+		<div class="container mx-auto w-full max-w-3xl px-5">Search by Text:<br /><input id="searchTextbox" class="p-4 rounded-lg w-full mw-md text-black" /></div>
+		<div class="container mx-auto w-full max-w-3xl px-5 mt-2">Search By Sketch:<br />
+			<select name="sketches" id="sketches" class="p-4 rounded-lg w-full mw-md text-black">
+				<option value="" disabled selected></option>
+				{sketches.map((sketch) => (
+					<SketchSelect
+						sketch={sketch}
+					/>
+				))}
+			</select>
+		</div>
 		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
 				<Card
