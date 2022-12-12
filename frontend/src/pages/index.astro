@@ -12,10 +12,13 @@ const sketches = await getSketchList();
 <Layout title="I Think You Should Leave Quote Database">
 	<main>
 		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
-		<h2 class="font-serif text-center text-lg pb-5">ITYSL Quote Database</h2>
-		<div class="container mx-auto w-full max-w-3xl px-5">Search by Text:<br /><input placeholder="Search for ITYSL quotes..." id="searchTextbox" class="p-4 rounded-lg w-full mw-md text-black" /></div>
-		<div class="container mx-auto w-full max-w-3xl px-5 mt-2">Search By Sketch:<br />
-			<select name="sketches" id="sketches" class="p-4 rounded-lg w-full mw-md text-black">
+		<h2 class="font-serif text-center text-lg pb-3">ITYSL Quote Database</h2>
+		<div id="textsearch" class="container mx-auto w-full max-w-3xl px-5 mt-2"><span class="font-serif text-lg">Search by Text:</span><br /><input placeholder="Search for ITYSL quotes..." id="searchTextbox" class="p-4 rounded-lg w-full mw-md text-black" />
+			<br />
+			<div class="text-center text-sm pt-1"><a href="" id="switchToSketch" class="text-slate-300 hover:text-amber-300 ease-in duration-200">Switch to Search by Sketch?</a></div>
+		</div>
+		<div id="sketchsearch" class="hidden container mx-auto w-full max-w-3xl px-5 mt-2"><span class="font-serif text-lg">Search By Sketch:</span><br />
+			<select name="sketches" id="sketches" class="p-4 rounded-lg w-full mw-md text-black" style="height:56px!important;">
 				<option value="all" disabled selected>All Sketches</option>
 				{sketches.map((sketch) => (
 					<SketchSelect
@@ -23,6 +26,8 @@ const sketches = await getSketchList();
 					/>
 				))}
 			</select>
+			<br />
+			<div class="text-center text-sm pt-1"><a href="" id="switchToText" class="text-slate-300 :text-amber-300 ease-in duration-200">Switch to Text Search?</a></div>
 		</div>
 		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
@@ -116,4 +121,27 @@ const sketches = await getSketchList();
 					})
 				})
 	}
+
+	//toggles for search type visibility
+	document.getElementById('switchToSketch').addEventListener('click', (event) => {
+		event.preventDefault();
+		showSketch();
+    });
+
+	document.getElementById('switchToText').addEventListener('click', (event) => {
+		event.preventDefault();
+		showText();
+    });
+
+	function showText(){
+		document.getElementById('searchTextbox').value = '';
+		document.getElementById('textsearch').style.display = 'block'; 
+		document.getElementById('sketchsearch').style.display = 'none'; 
+	}
+	function showSketch(){
+		document.getElementById('sketches').value='all';
+		document.getElementById('textsearch').style.display = 'none'; 
+		document.getElementById('sketchsearch').style.display = 'block'; 
+	}
+	
 </script>
