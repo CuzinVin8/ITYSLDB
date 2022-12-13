@@ -29,7 +29,7 @@ const sketches = await getSketchList();
 			<br />
 			<div class="text-center text-sm pt-1"><a href="" id="switchToText" class="text-slate-300 hover:text-amber-300 ease-in duration-200">Switch to Text Search?</a></div>
 		</div>
-		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max">
+		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max max-w-screen-2xl mx-auto">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
 				<Card
 					quote={quote.quote}
@@ -60,6 +60,7 @@ const sketches = await getSketchList();
     let st = document.getElementById('searchTextbox');
     if(st !== null){
         st.addEventListener('keyup', function() {
+			//don't search until user types at least 4 characters
 			let leng = st.value;
 			if(leng.length > 3){
 				// clear the timeout if it is already set
