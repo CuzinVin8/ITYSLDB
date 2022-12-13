@@ -4,6 +4,11 @@ type: 'document',
     title: 'Quote',
 fields: [
     {
+    title: 'Featured Quote',
+    type: 'boolean',
+    name: 'featured'
+    },
+    {
     name: 'quote',
     type: 'string',
     title: 'Quote'
