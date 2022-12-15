@@ -4,14 +4,14 @@ type: 'document',
     title: 'Quote',
 fields: [
     {
-    name: 'quote',
-    type: 'string',
-    title: 'Quote'
-    },
-    {
     type: 'boolean',
     name: 'featured',
     title: 'Featured Quote'
+    },
+    {
+    name: 'quote',
+    type: 'string',
+    title: 'Quote'
     },
     {
     name: 'charactername',
