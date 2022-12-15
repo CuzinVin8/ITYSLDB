@@ -2,7 +2,7 @@ import {useSanityClient} from 'astro-sanity'
 
 export async function getAllQuotes() {
     const client = useSanityClient()
-    const query = '*[_type == "quote"  && featured == true] | order(season asc, episode asc, timestamp asc)'
+    const query = '*[_type == "quote" && featured == true] | order(season asc, episode asc, timestamp asc)'
     const quotes = await client.fetch(query)
     return quotes;
 }
