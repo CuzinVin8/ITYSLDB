@@ -11,13 +11,16 @@ const sketches = await getSketchList();
 
 <Layout title="I Think You Should Leave Quote Database">
 	<main>
-		<h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1>
-		<h2 class="font-serif text-center text-lg pb-3">ITYSL Quote Database</h2>
-		<div id="textsearch" class="container mx-auto w-full max-w-3xl px-5 mt-2"><span class="font-serif text-lg">Search by Text:</span><br /><input placeholder="Search for ITYSL quotes..." id="searchTextbox" class="p-4 rounded-lg w-full mw-md text-black" />
+		<a href="https://ithinkyoushouldquote.me"><h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1></a>
+		<h2 class="font-serif text-center text-lg pb-6">ITYSL Quote Database</h2>
+		<div id="intro" class="text-center w-full mw-md max-w-3xl mx-auto py-4">
+			<p class="text-xl font-serif pb-3">"It's so funny. I just can't remember, like... how to search for it."</p>Welcome to the searchable "I Think You Should Leave" quote database where you'll have an easier time 'searching for it'. Enjoy the hand-selected quotes below or search for a specific quote in the search bar. You can switch to searching by sketch using a dropdown and get all the hilarious quotes from your favorite sketch. 
+		</div>
+		<div id="textsearch" class="container mx-auto w-full max-w-3xl px-5 mt-2 pb-2"><span class="font-serif text-lg">Search by Text:</span><br /><input placeholder="Search for ITYSL quotes..." id="searchTextbox" class="p-4 rounded-lg w-full mw-md text-black" />
 			<br />
 			<div class="text-center text-sm pt-1"><a href="" id="switchToSketch" class="text-slate-300 hover:text-amber-300 ease-in duration-200">Switch to Search by Sketch?</a></div>
 		</div>
-		<div id="sketchsearch" class="hidden container mx-auto w-full max-w-3xl px-5 mt-2"><span class="font-serif text-lg">Search By Sketch:</span><br />
+		<div id="sketchsearch" class="hidden container mx-auto w-full max-w-3xl px-5 mt-2 pb-2"><span class="font-serif text-lg">Search By Sketch:</span><br />
 			<select name="sketches" id="sketches" class="p-4 rounded-lg w-full mw-md text-black" style="height:56px!important;">
 				<option value="all" disabled selected>All Sketches</option>
 				{sketches.map((sketch) => (
@@ -29,7 +32,6 @@ const sketches = await getSketchList();
 			<br />
 			<div class="text-center text-sm pt-1"><a href="" id="switchToText" class="text-slate-300 hover:text-amber-300 ease-in duration-200">Switch to Text Search?</a></div>
 		</div>
-		<div id="intro" class="text-center w-full mw-md max-w-3xl mx-auto py-4">Welcome to the searchable "I Think You Should Leave" quote database. Enjoy the hand-selected quotes below or use the field above to search by quote text. You can switch to searching by sketch using a dropdown and get all the hilarious quotes from your favorite sketch. </div>
 		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max max-w-screen-2xl mx-auto">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; }) =>
 				<Card
@@ -68,7 +70,7 @@ const sketches = await getSketchList();
 				clearTimeout(timeout);
 				//clear the results
 				document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">Searching...</i>';
-
+				document.getElementById('intro').style.display = 'none';
 				// set the timeout to call the searchJson() function after 300 milliseconds
 				timeout = setTimeout(function() {
 					let newQ = `*[quote%20match%20"*${st.value}*"]%20|%20order(season%20asc,%20episode%20asc,%20timestamp%20asc)`;
@@ -108,6 +110,7 @@ const sketches = await getSketchList();
 
 	function searchBySketch() {
 		var ddv = document.getElementById("sketches");
+		document.getElementById('intro').style.display = 'none';
 		let newQ = `*[sketch%20==%20"${ddv.value}"]%20|%20order(timestamp%20asc)`;
 				fetchSketchQuotesJSON(newQ).then(function(results) {
 					if(results.result.length === 0){
