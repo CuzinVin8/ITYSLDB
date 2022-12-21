@@ -52,8 +52,8 @@ const sketches = await getSketchList();
     let timeout = undefined;
 
 	//api call for text search
-	async function fetchQuotesJSON(sq) {
-		const nsearch = "https://7lpknm4h.apicdn.sanity.io/v2021-06-07/data/query/production?query="+sq;
+	async function fetchQuotesJSON(sq) { 
+		const nsearch = "https://7lpknm4h.api.sanity.io/v2021-06-07/data/query/production?query="+sq;
 		const response = await fetch(nsearch);
 		const quotes = await response.json();
 		return quotes;
@@ -91,7 +91,7 @@ const sketches = await getSketchList();
 
 	//api call for sketch search
 	async function fetchSketchQuotesJSON(sq) {
-		const nsearch = "https://7lpknm4h.apicdn.sanity.io/v2021-06-07/data/query/production?query="+sq;
+		const nsearch = "https://7lpknm4h.api.sanity.io/v2021-06-07/data/query/production?query="+sq;
 		const response = await fetch(nsearch);
 		const quotes = await response.json();
 		return quotes;
