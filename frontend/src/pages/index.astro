@@ -13,8 +13,8 @@ const sketches = await getSketchList();
 	<main>
 		<a href="https://ithinkyoushouldquote.me"><h1 class="font-serif text-center text-4xl pt-5">I Think You Should Quote</h1></a>
 		<h2 class="font-serif text-center text-lg pb-6">ITYSL Quote Database</h2>
-		<div id="intro" class="text-center w-full mw-md max-w-3xl mx-auto py-4">
-			<p class="text-xl font-serif pb-3">"It's so funny. I just can't remember, like... how to search for it."</p>Welcome to the searchable "I Think You Should Leave" quote database where you'll have an easier time 'searching for it'. Enjoy the hand-selected quotes below or search for a specific quote in the search bar. You can switch to searching by sketch using a dropdown and get all the hilarious quotes from your favorite sketch. 
+		<div id="intro" class="text-center w-full mw-md max-w-3xl mx-auto py-4 px-3">
+			<p class="text-xl font-serif pb-3">"It's so funny. I just can't remember, like... how to search for it."</p>Welcome to the searchable "I Think You Should Leave" quote database where you'll have an easier time 'searching for it'. Enjoy the hand-selected quotes below or search for a specific quote in the search bar. You can switch to searching by sketch using a dropdown and get all the hilarious quotes from your favorite sketch. Click on any quote to copy it to your clipboard instantly.
 		</div>
 		<div id="textsearch" class="container mx-auto w-full max-w-3xl px-5 mt-2 pb-2"><span class="font-serif text-lg">Search by Text:</span><br /><input placeholder="Search for ITYSL quotes..." id="searchTextbox" class="inline-block p-4 rounded-l-lg w-8/12 lg:w-10/12 mw-md text-black" /><button id="submitSearch" class="inline-block p-4 w-4/12 lg:w-2/12 text-black rounded-r-lg bg-amber-300 hover:bg-amber-400 ease-in duration-200 font-serif">Submit</button>
 			<br />
@@ -83,7 +83,7 @@ const sketches = await getSketchList();
 						charname = " - " + obj.charactername;
 					}
 					let alt = obj.quote.substring(0, 100);
-					document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><div class="text-xl">'+obj.quote+'</div><div class="text-right pt-2">'+charname+'</div></div></li>';
+					document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2">'+charname+'</div></div></li>';
 				})
 			})
         });
@@ -119,7 +119,7 @@ const sketches = await getSketchList();
 							charname = " - " + obj.charactername;
 						}
 						let alt = obj.quote.substring(0, 100);
-						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><div class="text-xl">'+obj.quote+'</div><div class="text-right pt-2">'+charname+'</div></div></li>';
+						document.getElementById('resultDiv').innerHTML += '<li class="p-5"><div class="rounded-lg p-5 bg-gray-800 h-full"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'<br /><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2">'+charname+'</div></div></li>';
 					})
 				})
 	}
@@ -144,6 +144,26 @@ const sketches = await getSketchList();
 		document.getElementById('sketches').value='all';
 		document.getElementById('textsearch').style.display = 'none'; 
 		document.getElementById('sketchsearch').style.display = 'block'; 
+	}
+
+	//click to copy quotes
+	var btnprod = document.getElementsByClassName("quoteText");
+
+	// When the user clicks on the button, open the modal 
+	for (var i = 0; i < btnprod.length; i++) {
+		btnprod[i].onclick = function(event) {
+			window.getSelection().selectAllChildren(event.target)
+			navigator.clipboard.writeText(this.textContent);
+			/* reveal message that it was copied */
+			let cbShow = document.getElementById('clipboardText');
+			let cbH = document.getElementById('msgHolder');
+			cbH.style.marginTop = "0px";
+			cbShow.style.opacity = "1";
+			setTimeout(() => {  //timeout to hide message again
+				cbH.style.marginTop = "-9000px";
+				cbShow.style.opacity = "0";
+			}, 2000)
+		}
 	}
 	
 </script>
