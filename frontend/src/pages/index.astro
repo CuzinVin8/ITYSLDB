@@ -4,7 +4,6 @@ import Card from '../components/Card.astro';
 import SketchSelect from '../components/SketchSelect.astro';
 import {getAllQuotes,getSketchList} from "../sanity/api.js";
 import {urlForImage} from '../sanity/urlForImage.js';
-import domtoimage from 'dom-to-image';
 
 const quotes = await getAllQuotes();
 const sketches = await getSketchList();
