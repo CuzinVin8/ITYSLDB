@@ -149,6 +149,7 @@ const sketches = await getSketchList();
 		document.getElementById('sketchsearch').style.display = 'block'; 
 	}
 
+	//function to add click actions to all result cards
 	function newResults(){
 		//click to copy quotes
 		let btnprod = document.getElementsByClassName("quoteText");
@@ -187,7 +188,6 @@ const sketches = await getSketchList();
 		for (var i = 0; i < btndl.length; i++) {
 			btndl[i].onclick = function(event) {
 				let pn = this.parentNode.previousElementSibling.id;
-				console.log(pn);
 				domtoimage.toJpeg(document.getElementById(pn))
 				.then(function (dataUrl) {
 					var link = document.createElement('a');
