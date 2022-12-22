@@ -6,18 +6,20 @@ export interface Props {
 	season: string;
 	episode: string;
 	character: string;
+	idkey: string;
 }
 
-let  { quote, imgurl, sketch, season, episode, character } = Astro.props;
+let  { quote, imgurl, sketch, season, episode, character, idkey } = Astro.props;
 if(character !== undefined){character = " - " + character}
 let alt = quote.substring(0, 100)
 ---
 
 <li class="p-5">
-	<div class="rounded-lg p-5 bg-gray-800 h-full">
+	<div class="rounded-lg px-5 pt-5 pb-14 bg-gray-800 h-full" id={idkey}>
 		<i>{sketch}</i>, Season: {season}, Ep: {episode}<br />
 		<img src={imgurl} alt={alt} /><br />
-		<h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">{quote}</h3>
+		<h3 class="quoteText text-xl cursor-copy selection:bg-amber-300 selection:text-black">{quote}</h3>
 		<div class="text-right pt-2">{character}</div>
 	</div>
+	<section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="download quote card image" title="download quote card image" /></section>
 </li>
