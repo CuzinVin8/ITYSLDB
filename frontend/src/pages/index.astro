@@ -67,8 +67,8 @@ const sketches = await getSketchList();
 	{sketchName:"Babysitter Hit and Run",link:"https://www.netflix.com/watch/80986860?t=728"},
 	{sketchName:"Big Wave",link:"https://www.netflix.com/watch/81212180?t=569"},
 	{sketchName:"Blues Brother",link:"https://www.netflix.com/watch/81212178?t=260"},
-	{sketchName:"Bozo Dubbed #1",link:"https://www.netflix.com/watch/80986861?t=367"},
-	{sketchName:"Bozo Dubbed #2",link:"https://www.netflix.com/watch/80986861?t=701"},
+	{sketchName:"Bozo Dubbed (1)",link:"https://www.netflix.com/watch/80986861?t=367"},
+	{sketchName:"Bozo Dubbed (2)",link:"https://www.netflix.com/watch/80986861?t=701"},
 	{sketchName:"CalicoCutPants.com",link:"https://www.netflix.com/watch/81212178?t=420"},
 	{sketchName:"Carber Hot Dog Vac",link:"https://www.netflix.com/watch/81212177?t=359"},
 	{sketchName:"Choking",link:"https://www.netflix.com/watch/80986860?t=197"},
@@ -107,8 +107,8 @@ const sketches = await getSketchList();
 	{sketchName:"Prank Show",link:"https://www.netflix.com/watch/81212175?t=282"},
 	{sketchName:"Professor Dinner",link:"https://www.netflix.com/watch/81212177?t=7"},
 	{sketchName:"Pulling the Door Open",link:"https://www.netflix.com/watch/80986856?t=7"},
-	{sketchName:"River Mountain High #1",link:"https://www.netflix.com/watch/80986857?t=134"},
-	{sketchName:"River Mountain High #2",link:"https://www.netflix.com/watch/80986857?t=567"},
+	{sketchName:"River Mountain High (1)",link:"https://www.netflix.com/watch/80986857?t=134"},
+	{sketchName:"River Mountain High (2)",link:"https://www.netflix.com/watch/80986857?t=567"},
 	{sketchName:"Scott Loves His Wife",link:"https://www.netflix.com/watch/81212178?t=7"},
 	{sketchName:"Shops at the Creek",link:"https://www.netflix.com/watch/81212176?t=545"},
 	{sketchName:"Stable of Stars",link:"https://www.netflix.com/watch/81212179?t=334"},
@@ -176,7 +176,7 @@ const sketches = await getSketchList();
 					let strSecs = totalSeconds.toString();
 					//get link for episode
 					let epilink = episodeLinkArray[parseInt(obj.season)-1][parseInt(obj.episode)-1] + strSecs;
-					document.getElementById('resultDiv').innerHTML += '<li class="px-0 py-3 sm:p-3 md:p-4"><div class="rounded-lg px-4 sm:px-5 pt-5 pb-16 bg-gray-800 h-full" id='+obj._id+'><div class="mb-1.5" data-html2canvas-ignore="true"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'</div><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2" data-html2canvas-ignore="true">'+charname+'</div></div><section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="Download quote card image" title="Download quote card image" /></section><section class="-mt-5 ml-20"><a href='+epilink+' target="_blank"><img class="videoImg cursor-pointer" src="/video.svg" width="23" alt="Watch quote on Netflix" title="Watch quote on Netflix" /></a></section></li>';
+					document.getElementById('resultDiv').innerHTML += '<li class="px-0 py-3 sm:p-3 md:p-4"><div class="rounded-lg px-4 sm:px-5 pt-5 pb-16 bg-gray-800 h-full" id='+obj._id+'><div class="mb-1.5" data-html2canvas-ignore="true"><i class="sketchPick cursor-pointer text-amber-300 hover:text-amber-400 hover:underline ease-in duration-200">'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'</div><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2" data-html2canvas-ignore="true">'+charname+'</div></div><section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="Download quote card image" title="Download quote card image" /></section><section class="-mt-5 ml-20"><a href='+epilink+' target="_blank"><img class="videoImg cursor-pointer" src="/video.svg" width="23" alt="Watch quote on Netflix" title="Watch quote on Netflix" /></a></section></li>';
 				})
 				newResults();
 			})
@@ -197,7 +197,7 @@ const sketches = await getSketchList();
 	function searchBySketch() {
 		var ddv = document.getElementById("sketches");
 		document.getElementById('intro').style.display = 'none';
-		let newQ = `*[sketch%20==%20"${ddv.value}"]%20|%20order(timestamp%20asc)`;
+		let newQ = `*[sketch%20==%20"${encodeURI(ddv.value)}"]%20|%20order(timestamp%20asc)`;
 				fetchSketchQuotesJSON(newQ).then(function(results) {
 					if(results.result.length === 0){
 						document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">No Results Found.<br /><img class="pt-2 pb-5 mx-auto px-5" src="/noresults.jpg" width="480" /></i>';
@@ -266,6 +266,21 @@ const sketches = await getSketchList();
 
 	//function to add click actions to all result cards
 	function newResults(){
+		//click to filter by sketch link
+		let skt = document.getElementsByClassName("sketchPick");
+
+		//when user clicks the sketch filter by sketch
+		for (var i = 0; i < skt.length; i++) {
+			skt[i].onclick = function(event) {
+				event.preventDefault();
+				showSketch();
+				let element = document.getElementById('sketches');
+				element.value = this.innerText;
+				searchBySketch();
+				window.scrollTo(0, 0);
+			}
+		}
+		
 		//click to copy quotes
 		let btnprod = document.getElementsByClassName("quoteText");
 
