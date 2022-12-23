@@ -95,7 +95,7 @@ const sketches = await getSketchList();
 						charname = " - " + obj.charactername;
 					}
 					let alt = obj.quote.substring(0, 100);
-					document.getElementById('resultDiv').innerHTML += '<li class="px-0 py-3 sm:p-3 md:p-4"><div class="rounded-lg px-4 sm:px-5 pt-5 pb-14 bg-gray-800 h-full" id='+obj._id+'><div class="mb-1.5" data-html2canvas-ignore="true"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'</div><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2">'+charname+'</div></div><section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="download quote card image" title="download quote card image" /></section></li>';
+					document.getElementById('resultDiv').innerHTML += '<li class="px-0 py-3 sm:p-3 md:p-4"><div class="rounded-lg px-4 sm:px-5 pt-5 pb-14 bg-gray-800 h-full" id='+obj._id+'><div class="mb-1.5" data-html2canvas-ignore="true"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'</div><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2" data-html2canvas-ignore="true">'+charname+'</div></div><section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="download quote card image" title="download quote card image" /></section></li>';
 				})
 				newResults();
 			})
@@ -132,7 +132,7 @@ const sketches = await getSketchList();
 							charname = " - " + obj.charactername;
 						}
 						let alt = obj.quote.substring(0, 100);
-						document.getElementById('resultDiv').innerHTML += '<li class="px-0 py-3 sm:p-3 md:p-4"><div class="rounded-lg px-4 sm:px-5 pt-5 pb-14 bg-gray-800 h-full" id='+obj._id+'><div class="mb-1.5" data-html2canvas-ignore="true"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'</div><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2">'+charname+'</div></div><section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="download quote card image" title="download quote card image" /></section></li>';
+						document.getElementById('resultDiv').innerHTML += '<li class="px-0 py-3 sm:p-3 md:p-4"><div class="rounded-lg px-4 sm:px-5 pt-5 pb-14 bg-gray-800 h-full" id='+obj._id+'><div class="mb-1.5" data-html2canvas-ignore="true"><i>'+obj.sketch+'</i>, Season: '+obj.season+', Ep: '+obj.episode+'</div><img src='+imgLink+' alt="'+alt+'" /><br /><h3 class="text-xl quoteText cursor-copy selection:bg-amber-300 selection:text-black">'+obj.quote+'</h3><div class="text-right pt-2" data-html2canvas-ignore="true">'+charname+'</div></div><section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="download quote card image" title="download quote card image" /></section></li>';
 					})
 					newResults();
 				})
