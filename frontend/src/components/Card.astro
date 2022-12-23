@@ -6,12 +6,24 @@ export interface Props {
 	season: string;
 	episode: string;
 	character: string;
+	timestamp: string;
 	idkey: string;
 }
 
-let  { quote, imgurl, sketch, season, episode, character, idkey } = Astro.props;
+let  { quote, imgurl, sketch, season, episode, character, timestamp, idkey } = Astro.props;
 if(character !== undefined){character = " - " + character}
-let alt = quote.substring(0, 100)
+let alt = quote.substring(0, 100);
+//make timestamp for link
+let minutesStr = timestamp.substring(0, 2);
+let secondsStr = timestamp.substring(2);
+let minutes = parseInt(minutesStr);
+let seconds = parseInt(secondsStr);
+minutes = minutes * 60;
+let totalSeconds = minutes + seconds;
+let strSecs = totalSeconds.toString();
+//get link for episode
+const episodeLinkArray = [["https://www.netflix.com/watch/80986856?t=", "https://www.netflix.com/watch/80986857?t=", "https://www.netflix.com/watch/80986858?t=", "https://www.netflix.com/watch/80986859?t=", "https://www.netflix.com/watch/80986860?t=", "https://www.netflix.com/watch/80986861?t="],["https://www.netflix.com/watch/81212175?t=", "https://www.netflix.com/watch/81212176?t=", "https://www.netflix.com/watch/81212177?t=", "https://www.netflix.com/watch/81212178?t=", "https://www.netflix.com/watch/81212179?t=", "https://www.netflix.com/watch/81212180?t="]]
+let epilink = episodeLinkArray[parseInt(season)-1][parseInt(episode)-1] + strSecs;
 ---
 
 <li class="px-0 py-3 sm:p-3 md:p-4">
@@ -21,5 +33,6 @@ let alt = quote.substring(0, 100)
 		<h3 class="quoteText text-xl cursor-copy selection:bg-amber-300 selection:text-black">{quote}</h3>
 		<div class="text-right pt-2" data-html2canvas-ignore="true">{character}</div>
 	</div>
-	<section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="download quote card image" title="download quote card image" /></section>
+	<section class="-mt-10 ml-5"><img class="downloadImg cursor-pointer" src="/download.svg" height="24" alt="Download quote card image" title="Download quote card image" /></section>
+	<section class="-mt-5 ml-20"><a href={epilink} target="_blank"><img class="videoImg cursor-pointer" src="/video.svg" width="24" alt="Watch quote on Netflix" title="Watch quote on Netflix" /></a></section>
 </li>
