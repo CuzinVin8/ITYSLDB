@@ -32,6 +32,9 @@ const sketches = await getSketchList();
 			<br />
 			<div class="text-center text-sm pt-1"><a href="" id="switchToText" class="text-slate-300 hover:text-amber-300 ease-in duration-200">Switch to Text Search?</a></div>
 		</div>
+		<div id="sketchWatch" class="text-center w-full mw-md max-w-3xl mx-auto py-4 px-3 hidden">
+			<p class="text-xl font-serif pb-3"><a id="fullWatchLink" href="" class="text-slate-300 hover:text-amber-300 ease-in duration-200 cursor-pointer leading-6"><img src="/video.svg" width="28" class="inline-block align-sub" /> Watch Full Sketch</a></p>
+		</div>
 		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max max-w-screen-2xl mx-auto">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; timestamp: string; _id: string }) =>
 				<Card
@@ -53,7 +56,71 @@ const sketches = await getSketchList();
 	// create a variable to store the timeout
     let timeout = undefined;
 	// array of netflix episode links
-	const episodeLinkArray = [["https://www.netflix.com/watch/80986856?t=", "https://www.netflix.com/watch/80986857?t=", "https://www.netflix.com/watch/80986858?t=", "https://www.netflix.com/watch/80986859?t=", "https://www.netflix.com/watch/80986860?t=", "https://www.netflix.com/watch/80986861?t="],["https://www.netflix.com/watch/81212175?t=", "https://www.netflix.com/watch/81212176?t=", "https://www.netflix.com/watch/81212177?t=", "https://www.netflix.com/watch/81212178?t=", "https://www.netflix.com/watch/81212179?t=", "https://www.netflix.com/watch/81212180?t="]];
+	const episodeLinkArray = [
+		["https://www.netflix.com/watch/80986856?t=", "https://www.netflix.com/watch/80986857?t=", "https://www.netflix.com/watch/80986858?t=", "https://www.netflix.com/watch/80986859?t=", "https://www.netflix.com/watch/80986860?t=", "https://www.netflix.com/watch/80986861?t="],
+		["https://www.netflix.com/watch/81212175?t=", "https://www.netflix.com/watch/81212176?t=", "https://www.netflix.com/watch/81212177?t=", "https://www.netflix.com/watch/81212178?t=", "https://www.netflix.com/watch/81212179?t=", "https://www.netflix.com/watch/81212180?t="]
+	];
+	const sketchLinkArray = [
+	{sketchName:"Baby Cries",link:"https://www.netflix.com/watch/81212176?t=620"},
+	{sketchName:"Baby Shower",link:"https://www.netflix.com/watch/80986861?t=494"},
+	{sketchName:"Baby of the Year",link:"https://www.netflix.com/watch/80986856?t=208"},
+	{sketchName:"Babysitter Hit and Run",link:"https://www.netflix.com/watch/80986860?t=728"},
+	{sketchName:"Big Wave",link:"https://www.netflix.com/watch/81212180?t=569"},
+	{sketchName:"Blues Brother",link:"https://www.netflix.com/watch/81212178?t=260"},
+	{sketchName:"Bozo Dubbed #1",link:"https://www.netflix.com/watch/80986861?t=367"},
+	{sketchName:"Bozo Dubbed #2",link:"https://www.netflix.com/watch/80986861?t=701"},
+	{sketchName:"CalicoCutPants.com",link:"https://www.netflix.com/watch/81212178?t=420"},
+	{sketchName:"Carber Hot Dog Vac",link:"https://www.netflix.com/watch/81212177?t=359"},
+	{sketchName:"Choking",link:"https://www.netflix.com/watch/80986860?t=197"},
+	{sketchName:"Claire’s",link:"https://www.netflix.com/watch/81212180?t=750"},
+	{sketchName:"Coffin Flop",link:"https://www.netflix.com/watch/81212175?t=163"},
+	{sketchName:"Credit Card Roulette",link:"https://www.netflix.com/watch/81212179?t=125"},
+	{sketchName:"Dan Flashes",link:"https://www.netflix.com/watch/81212176?t=122"},
+	{sketchName:"Dan Vega’s Mega Money Quiz",link:"https://www.netflix.com/watch/80986861?t=138"},
+	{sketchName:"Dave's Huge Dumps",link:"https://www.netflix.com/watch/81212180?t=7"},
+	{sketchName:"Detective Crashmore (Trailer)",link:"https://www.netflix.com/watch/81212177?t=243"},
+	{sketchName:"Detective Crashmore (Press Junket)",link:"https://www.netflix.com/watch/81212177?t=450"},
+	{sketchName:"Diner Wink",link:"https://www.netflix.com/watch/81212176?t=334"},
+	{sketchName:"Driver's Ed",link:"https://www.netflix.com/watch/81212180?t=177"},
+	{sketchName:"Fenton’s Horse Ranch",link:"https://www.netflix.com/watch/80986861?t=36"},
+	{sketchName:"Focus Group",link:"https://www.netflix.com/watch/80986858?t=235"},
+	{sketchName:"Fully Loaded Nachos",link:"https://www.netflix.com/watch/80986859?t=368"},
+	{sketchName:"Funeral Organ",link:"https://www.netflix.com/watch/80986858?t=573"},
+	{sketchName:"Game Night",link:"https://www.netflix.com/watch/80986858?t=697"},
+	{sketchName:"Garfield House",link:"https://www.netflix.com/watch/80986861?t=830"},
+	{sketchName:"Ghost Tour",link:"https://www.netflix.com/watch/81212175?t=719"},
+	{sketchName:"Ghosts of Christmas Way Future",link:"https://www.netflix.com/watch/80986859?t=226"},
+	{sketchName:"Gift Receipt",link:"https://www.netflix.com/watch/80986856?t=563"},
+	{sketchName:"Has This Ever Happened to You?",link:"https://www.netflix.com/watch/80986856?t=101"},
+	{sketchName:"Herbie Hancock",link:"https://www.netflix.com/watch/80986859?t=31"},
+	{sketchName:"Honk If You’re Horny",link:"https://www.netflix.com/watch/80986859?t=600"},
+	{sketchName:"Insider Trading",link:"https://www.netflix.com/watch/81212177?t=633"},
+	{sketchName:"Instagram",link:"https://www.netflix.com/watch/80986856?t=444"},
+	{sketchName:"Insult Comic Restaurant",link:"https://www.netflix.com/watch/81212179?t=607"},
+	{sketchName:"Laser Spine Specialists",link:"https://www.netflix.com/watch/80986858?t=411"},
+	{sketchName:"Little Buff Boys (Competition)",link:"https://www.netflix.com/watch/81212175?t=489"},
+	{sketchName:"Little Buff Boys (Commercial)",link:"https://www.netflix.com/watch/81212179?t=549"},
+	{sketchName:"Magicians Suck!",link:"https://www.netflix.com/watch/80986858?t=9"},
+	{sketchName:"Motorcycles",link:"https://www.netflix.com/watch/80986857?t=10"},
+	{sketchName:"New Office Printer",link:"https://www.netflix.com/watch/80986860?t=375"},
+	{sketchName:"Parking Lot",link:"https://www.netflix.com/watch/81212179?t=7"},
+	{sketchName:"Prank Show",link:"https://www.netflix.com/watch/81212175?t=282"},
+	{sketchName:"Professor Dinner",link:"https://www.netflix.com/watch/81212177?t=7"},
+	{sketchName:"Pulling the Door Open",link:"https://www.netflix.com/watch/80986856?t=7"},
+	{sketchName:"River Mountain High #1",link:"https://www.netflix.com/watch/80986857?t=134"},
+	{sketchName:"River Mountain High #2",link:"https://www.netflix.com/watch/80986857?t=567"},
+	{sketchName:"Scott Loves His Wife",link:"https://www.netflix.com/watch/81212178?t=7"},
+	{sketchName:"Shops at the Creek",link:"https://www.netflix.com/watch/81212176?t=545"},
+	{sketchName:"Stable of Stars",link:"https://www.netflix.com/watch/81212179?t=334"},
+	{sketchName:"Tammy Craps",link:"https://www.netflix.com/watch/81212180?t=449"},
+	{sketchName:"The Bones Are Their Money",link:"https://www.netflix.com/watch/80986860?t=522"},
+	{sketchName:"The Capital Room",link:"https://www.netflix.com/watch/81212176?t=7"},
+	{sketchName:"The Man",link:"https://www.netflix.com/watch/80986857?t=642"},
+	{sketchName:"Whoopee Cushion",link:"https://www.netflix.com/watch/80986857?t=379"},
+	{sketchName:"Wienermobile",link:"https://www.netflix.com/watch/80986860?t=12"},
+	{sketchName:"Wilson’s Toupees",link:"https://www.netflix.com/watch/80986857?t=277"},
+	{sketchName:"You Can't Skip Lunch",link:"https://www.netflix.com/watch/81212175?t=7"}
+	]
 
 	//api call for text search
 	async function fetchQuotesJSON(sq) { 
@@ -89,6 +156,7 @@ const sketches = await getSketchList();
 				} else{
 					document.getElementById('resultDiv').innerHTML = '';
 				}
+				document.getElementById('sketchWatch').style.display = 'hidden'; 
 				results.result.forEach(obj => {
 					cutLink = obj.characterimage.asset._ref.slice(6).slice(0, -4);
 					imgLink = "https://cdn.sanity.io/images/7lpknm4h/production/" + cutLink + ".jpg?w=700";
@@ -136,6 +204,19 @@ const sketches = await getSketchList();
 					} else{
 						document.getElementById('resultDiv').innerHTML = '';
 					}
+					//get sketch video link from array
+					let arrayLength = sketchLinkArray.length;
+					for (var i = 0; i < arrayLength; i++) {
+						if(sketchLinkArray[i].sketchName == ddv.value){
+							var tlink = sketchLinkArray[i].link;
+							break;
+						}
+					}
+					
+					//get full video link element and assign link
+					var a = document.getElementById('fullWatchLink');
+					a.href = tlink;
+					document.getElementById('sketchWatch').style.display = 'block'; 
 					results.result.forEach(obj => {
 						cutLink = obj.characterimage.asset._ref.slice(6).slice(0, -4);
 						imgLink = "https://cdn.sanity.io/images/7lpknm4h/production/" + cutLink + ".jpg?w=700";
