@@ -33,7 +33,7 @@ const sketches = await getSketchList();
 			<div class="text-center text-sm pt-1"><a href="" id="switchToText" class="text-slate-300 hover:text-amber-300 ease-in duration-200 leading-loose p-3">Switch to Text Search?</a></div>
 		</div>
 		<div id="sketchWatch" class="text-center w-full mw-md max-w-3xl mx-auto pb-4 pt-6 px-3 hidden">
-			<p class="text-xl font-serif pb-3"><a id="fullWatchLink" href="" target="_blank" class="text-slate-300 hover:text-amber-300 ease-in duration-200 cursor-pointer leading-6 text-2xl"><img src="/video.svg" width="38" class="inline-block align-bottom" /> Watch Full Sketch</a></p>
+			<p class="text-xl font-serif pb-3"><a id="fullWatchLink" href="" target="_blank" class="text-slate-300 hover:text-amber-300 ease-in duration-200 cursor-pointer leading-6 text-2xl" title="Watch Full Sketch on Netflix"><img src="/video.svg" width="38" class="inline-block align-bottom" /> Watch Full Sketch</a></p>
 		</div>
 		<ul id="resultDiv" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 auto-rows-max max-w-screen-2xl mx-auto">
 			{quotes.map((quote: { charactername: string; quote: string; sketch: string; season: string; episode: string; characterimage: string; timestamp: string; _id: string }) =>
