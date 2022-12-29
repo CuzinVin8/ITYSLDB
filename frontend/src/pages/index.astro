@@ -217,9 +217,11 @@ const sketches = await getSketchList();
 
 	function searchBySketch() {
 		var ddv = document.getElementById("sketches");
+		var ddl = ddv.options[ddv.selectedIndex].innerHTML;
 		window.history.replaceState(null, null, "?sketch="+ddv.value);
+		document.title = ddl + " | ITYSL Quote DB";
 		document.getElementById('intro').style.display = 'none';
-		let newQ = `*[sketch%20==%20"${encodeURI(ddv.options[ddv.selectedIndex].innerHTML)}"]%20|%20order(timestamp%20asc)`;
+		let newQ = `*[sketch%20==%20"${encodeURI(ddl)}"]%20|%20order(timestamp%20asc)`;
 				fetchSketchQuotesJSON(newQ).then(function(results) {
 					if(results.result.length === 0){
 						document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">No Results Found.<br /><img class="pt-2 pb-5 mx-auto px-5" src="/noresults.jpg" width="480" /></i>';
