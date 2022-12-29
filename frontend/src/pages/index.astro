@@ -26,6 +26,7 @@ const sketches = await getSketchList();
 				{sketches.map((sketch) => (
 					<SketchSelect
 						sketch={sketch}
+						sketchURL={sketch.replace(/[^\w\s]/g,"").replace(/\s+/g,'-').toLowerCase()}
 					/>
 				))}
 			</select>
@@ -147,6 +148,7 @@ const sketches = await getSketchList();
 
         sb.addEventListener('click', function() {
 			//clear the results
+			window.history.replaceState({}, document.title, "/");
 			document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">Searching...</i>';
 			document.getElementById('intro').style.display = 'none';
 			let newQ = `*[quote%20match%20"*${st.value}*"]%20|%20order(season%20asc,%20episode%20asc,%20timestamp%20asc)`;
@@ -191,13 +193,19 @@ const sketches = await getSketchList();
 		return quotes;
 	}
 
+	//make a url-friendly string
+	function removePunctuation(string) {
+		return nopunc.replace(/[^\w\s]/g,"").replace(/\s+/g,'-').toLowerCase()
+	}
+
 	//add an event listener for when the dropdown box selection is changed
 	document.getElementById("sketches").addEventListener("change", searchBySketch);
 
 	function searchBySketch() {
 		var ddv = document.getElementById("sketches");
+		window.history.replaceState(null, null, "?sketch="+ddv.value);
 		document.getElementById('intro').style.display = 'none';
-		let newQ = `*[sketch%20==%20"${encodeURI(ddv.value)}"]%20|%20order(timestamp%20asc)`;
+		let newQ = `*[sketch%20==%20"${encodeURI(ddv.options[ddv.selectedIndex].innerHTML)}"]%20|%20order(timestamp%20asc)`;
 				fetchSketchQuotesJSON(newQ).then(function(results) {
 					if(results.result.length === 0){
 						document.getElementById('resultDiv').innerHTML = '<i class="w-screen font-serif text-center text-lg pt-10 pb-10">No Results Found.<br /><img class="pt-2 pb-5 mx-auto px-5" src="/noresults.jpg" width="480" /></i>';
@@ -275,7 +283,7 @@ const sketches = await getSketchList();
 				event.preventDefault();
 				showSketch();
 				let element = document.getElementById('sketches');
-				element.value = this.innerText;
+				element.value = this.innerText.replace(/[^\w\s]/g,"").replace(/\s+/g,'-').toLowerCase();
 				searchBySketch();
 				window.scrollTo(0, 0);
 			}
@@ -284,7 +292,7 @@ const sketches = await getSketchList();
 		//click to copy quotes
 		let btnprod = document.getElementsByClassName("quoteText");
 
-		// When the user clicks on the button, open the modal 
+		// When the user clicks on the quote, open the modal 
 		for (var i = 0; i < btnprod.length; i++) {
 			btnprod[i].onclick = function(event) {
 				window.getSelection().selectAllChildren(event.target)
