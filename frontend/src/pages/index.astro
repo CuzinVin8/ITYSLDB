@@ -207,11 +207,6 @@ const sketches = await getSketchList();
 		return quotes;
 	}
 
-	//make a url-friendly string
-	function removePunctuation(string) {
-		return nopunc.replace(/[^\w\s]/g,"").replace(/\s+/g,'-').toLowerCase()
-	}
-
 	//add an event listener for when the dropdown box selection is changed
 	document.getElementById("sketches").addEventListener("change", searchBySketch);
 
