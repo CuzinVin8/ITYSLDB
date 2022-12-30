@@ -215,6 +215,7 @@ const sketches = await getSketchList();
 		var ddl = ddv.options[ddv.selectedIndex].innerHTML;
 		window.history.replaceState(null, null, "?sketch="+ddv.value);
 		document.title = ddl + " | ITYSL Quote DB";
+		document.querySelector('meta[name="description"]').setAttribute("content", ddl + " sketch quotes from I Think You Should Leave.");
 		document.getElementById('intro').style.display = 'none';
 		let newQ = `*[sketch%20==%20"${encodeURI(ddl)}"]%20|%20order(timestamp%20asc)`;
 				fetchSketchQuotesJSON(newQ).then(function(results) {
